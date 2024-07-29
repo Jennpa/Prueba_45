@@ -1,0 +1,11 @@
+@keyframes moverFondo {
+    0% { background-position: 0 0; }
+    100% { background-position: 100% 100%; }
+}
+
+.fondo-animado {
+    background: url('./imagenes/goodmorning-8838.gif') repeat; /* Asegúrate de que la ruta sea correcta */
+    background-size: 450% 450%;
+    animation: moverFondo 15s linear infinite;
+    height: 100vh; /* Ajusta según necesites */
+}

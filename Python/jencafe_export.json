@@ -1,0 +1,319 @@
+{
+    "cafes": [
+        {
+            "_id": "6685cd13c1462d78b753c2eb",
+            "nombreCafe": "Caf\u00e9 Especial",
+            "precio": 10000,
+            "tipo": "Ar\u00e1bica"
+        },
+        {
+            "_id": "6685cd13c1462d78b753c2ec",
+            "nombreCafe": "Caf\u00e9 Tradicional",
+            "precio": 8000,
+            "tipo": "Robusta"
+        },
+        {
+            "_id": "6685cd29c1462d78b753c2ef",
+            "nombreCafe": "Caf\u00e9 Especial",
+            "precio": 10000,
+            "tipo": "Ar\u00e1bica"
+        },
+        {
+            "_id": "6685cd29c1462d78b753c2f0",
+            "nombreCafe": "Caf\u00e9 Tradicional",
+            "precio": 8000,
+            "tipo": "Robusta"
+        }
+    ],
+    "pedidos": [
+        {
+            "_id": "6685cd64c1462d78b753c2f3",
+            "idCliente": "60c72b2f9b1e8a0d4cdddee3",
+            "idCafe": "60c72b2f9b1e8a0d4cdddee1",
+            "estadoPedido": "Pendiente",
+            "metodoPago": "Efectivo"
+        },
+        {
+            "_id": "6685cd64c1462d78b753c2f4",
+            "idCliente": "60c72b2f9b1e8a0d4cdddee4",
+            "idCafe": "60c72b2f9b1e8a0d4cdddee2",
+            "estadoPedido": "Completado",
+            "metodoPago": "Tarjeta"
+        },
+        {
+            "_id": "669191df304263332c21e761",
+            "idCliente": "669191df304263332c21e759",
+            "idCafe": "669191df304263332c21e757",
+            "estadoPedido": "Pendiente",
+            "metodoPago": "Efectivo",
+            "__v": 0
+        },
+        {
+            "_id": "669191df304263332c21e762",
+            "idCliente": "669191df304263332c21e75a",
+            "idCafe": "669191df304263332c21e758",
+            "estadoPedido": "Completado",
+            "metodoPago": "Tarjeta",
+            "__v": 0
+        }
+    ],
+    "facturas": [
+        {
+            "_id": "6685cd64c1462d78b753c2f5",
+            "idPedido": "60c72b2f9b1e8a0d4cdddee5",
+            "totalPagar": 10000
+        },
+        {
+            "_id": "6685cd64c1462d78b753c2f6",
+            "idPedido": "60c72b2f9b1e8a0d4cdddee6",
+            "totalPagar": 8000
+        },
+        {
+            "_id": "669191df304263332c21e764",
+            "idPedido": "669191df304263332c21e75b",
+            "totalPagar": 10000,
+            "__v": 0
+        },
+        {
+            "_id": "669191df304263332c21e765",
+            "idPedido": "669191df304263332c21e75c",
+            "totalPagar": 8000,
+            "__v": 0
+        }
+    ],
+    "caves": [],
+    "clientes": [
+        {
+            "_id": "6685cd13c1462d78b753c2e9",
+            "nombre": "Juan Perez",
+            "direccion": "Calle 123",
+            "metodoPago": "Efectivo"
+        },
+        {
+            "_id": "6685cd13c1462d78b753c2ea",
+            "nombre": "Maria Gomez",
+            "direccion": "Avenida 456",
+            "metodoPago": "PSE"
+        },
+        {
+            "_id": "6685cd23c1462d78b753c2ed",
+            "nombre": "Juan Perez",
+            "direccion": "Calle 123",
+            "metodoPago": "Efectivo"
+        },
+        {
+            "_id": "6685cd23c1462d78b753c2ee",
+            "nombre": "Maria Gomez",
+            "direccion": "Avenida 456",
+            "metodoPago": "PSE"
+        }
+    ],
+    "inventario": [
+        {
+            "_id": "6685cd64c1462d78b753c2f1",
+            "idCafe": "60c72b2f9b1e8a0d4cdddee1",
+            "cantidad": 50
+        },
+        {
+            "_id": "6685cd64c1462d78b753c2f2",
+            "idCafe": "60c72b2f9b1e8a0d4cdddee2",
+            "cantidad": 100
+        }
+    ],
+    "inventarios": [
+        {
+            "_id": "669191df304263332c21e75d",
+            "idCafe": "669191df304263332c21e757",
+            "cantidad": 50,
+            "__v": 0
+        },
+        {
+            "_id": "669191df304263332c21e75e",
+            "idCafe": "669191df304263332c21e758",
+            "cantidad": 100,
+            "__v": 0
+        }
+    ],
+    "productos": [
+        {
+            "_id": "66919e6d78d5549f3d702d77",
+            "nombre": "rich",
+            "descripcion": "Ready never leg treat simply factor.",
+            "precio": 61.65,
+            "categoria": "bring",
+            "stock": 63,
+            "imagen": "https://dummyimage.com/200x200"
+        },
+        {
+            "_id": "66919e6d78d5549f3d702d78",
+            "nombre": "newspaper",
+            "descripcion": "Per available light view majority.",
+            "precio": 10.22,
+            "categoria": "break",
+            "stock": 87,
+            "imagen": "https://placekitten.com/200/200"
+        },
+        {
+            "_id": "66919e6d78d5549f3d702d79",
+            "nombre": "want",
+            "descripcion": "College song professional professional.",
+            "precio": 50.28,
+            "categoria": "former",
+            "stock": 49,
+            "imagen": "https://picsum.photos/200/200"
+        },
+        {
+            "_id": "66919e6d78d5549f3d702d7a",
+            "nombre": "how",
+            "descripcion": "Model role score key.",
+            "precio": 51.96,
+            "categoria": "wonder",
+            "stock": 33,
+            "imagen": "https://picsum.photos/200/200"
+        },
+        {
+            "_id": "66919e6d78d5549f3d702d7b",
+            "nombre": "join",
+            "descripcion": "College shake reflect reason loss rich when.",
+            "precio": 35.2,
+            "categoria": "year",
+            "stock": 27,
+            "imagen": "https://dummyimage.com/200x200"
+        },
+        {
+            "_id": "66919e6d78d5549f3d702d7c",
+            "nombre": "on",
+            "descripcion": "Without despite yes majority pattern debate.",
+            "precio": 90.02,
+            "categoria": "on",
+            "stock": 27,
+            "imagen": "https://picsum.photos/200/200"
+        },
+        {
+            "_id": "66919e6d78d5549f3d702d7d",
+            "nombre": "still",
+            "descripcion": "Something follow charge.",
+            "precio": 30.65,
+            "categoria": "improve",
+            "stock": 62,
+            "imagen": "https://placekitten.com/200/200"
+        },
+        {
+            "_id": "66919e6d78d5549f3d702d7e",
+            "nombre": "stuff",
+            "descripcion": "Range water list race point myself letter.",
+            "precio": 34.66,
+            "categoria": "have",
+            "stock": 61,
+            "imagen": "https://placekitten.com/200/200"
+        },
+        {
+            "_id": "66919e6d78d5549f3d702d7f",
+            "nombre": "Congress",
+            "descripcion": "Social partner customer into police.",
+            "precio": 89.12,
+            "categoria": "back",
+            "stock": 9,
+            "imagen": "https://picsum.photos/200/200"
+        },
+        {
+            "_id": "66919e6d78d5549f3d702d80",
+            "nombre": "rest",
+            "descripcion": "Feel enjoy despite music.",
+            "precio": 84.69,
+            "categoria": "remember",
+            "stock": 93,
+            "imagen": "https://dummyimage.com/200x200"
+        },
+        {
+            "_id": "66919e6d78d5549f3d702d81",
+            "nombre": "need",
+            "descripcion": "Letter measure always over pretty organization.",
+            "precio": 80.94,
+            "categoria": "item",
+            "stock": 13,
+            "imagen": "https://placekitten.com/200/200"
+        },
+        {
+            "_id": "66919e6d78d5549f3d702d82",
+            "nombre": "certain",
+            "descripcion": "Movie action pretty serve everything performance both.",
+            "precio": 89.29,
+            "categoria": "rate",
+            "stock": 38,
+            "imagen": "https://placekitten.com/200/200"
+        },
+        {
+            "_id": "66919e6d78d5549f3d702d83",
+            "nombre": "myself",
+            "descripcion": "House life about agency fill.",
+            "precio": 41.1,
+            "categoria": "that",
+            "stock": 24,
+            "imagen": "https://picsum.photos/200/200"
+        },
+        {
+            "_id": "66919e6d78d5549f3d702d84",
+            "nombre": "agent",
+            "descripcion": "Letter conference sing tonight.",
+            "precio": 43.44,
+            "categoria": "at",
+            "stock": 25,
+            "imagen": "https://placekitten.com/200/200"
+        },
+        {
+            "_id": "66919e6d78d5549f3d702d85",
+            "nombre": "price",
+            "descripcion": "Dark decision discuss surface not.",
+            "precio": 16.95,
+            "categoria": "daughter",
+            "stock": 46,
+            "imagen": "https://dummyimage.com/200x200"
+        },
+        {
+            "_id": "66919e6d78d5549f3d702d86",
+            "nombre": "drive",
+            "descripcion": "Boy thing material term collection project black.",
+            "precio": 86.22,
+            "categoria": "wrong",
+            "stock": 32,
+            "imagen": "https://picsum.photos/200/200"
+        },
+        {
+            "_id": "66919e6d78d5549f3d702d87",
+            "nombre": "media",
+            "descripcion": "Chair paper finish good week since common.",
+            "precio": 11.54,
+            "categoria": "sense",
+            "stock": 81,
+            "imagen": "https://placekitten.com/200/200"
+        },
+        {
+            "_id": "66919e6d78d5549f3d702d88",
+            "nombre": "people",
+            "descripcion": "Matter dog whatever wrong perform argue.",
+            "precio": 54.07,
+            "categoria": "impact",
+            "stock": 94,
+            "imagen": "https://placekitten.com/200/200"
+        },
+        {
+            "_id": "66919e6d78d5549f3d702d89",
+            "nombre": "participant",
+            "descripcion": "Tell suffer color rule evening again.",
+            "precio": 48.0,
+            "categoria": "structure",
+            "stock": 2,
+            "imagen": "https://placekitten.com/200/200"
+        },
+        {
+            "_id": "66919e6d78d5549f3d702d8a",
+            "nombre": "guy",
+            "descripcion": "This country morning carry.",
+            "precio": 88.57,
+            "categoria": "identify",
+            "stock": 47,
+            "imagen": "https://dummyimage.com/200x200"
+        }
+    ]
+}

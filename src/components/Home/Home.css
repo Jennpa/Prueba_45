@@ -1,0 +1,13 @@
+/* src/components/Home/Home.css */
+.home-content {
+  padding: 20px;
+  text-align: center;
+}
+
+.home-content h2 {
+  margin-bottom: 20px;
+}
+
+.home-content p {
+  margin-bottom: 10px;
+}
