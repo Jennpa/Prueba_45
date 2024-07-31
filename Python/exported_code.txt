@@ -1,0 +1,829 @@
+// Start of C:\Users\info\OneDrive\Escritorio\JENN\Pagina Jen\jencafe\src\App.js
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import Header from './components/Header/Header';
+import NavBar from './components/NavBar/NavBar';
+import Home from './components/Home/Home';
+import Products from './components/Products/Products';
+import Login from './components/Login/Login';
+import PrivadaComponent from './components/PrivadaComponent/PrivadaComponent';
+import { useAuth } from './context/AuthContext';
+import './App.css';
+import UsoInterno from './components/UsoInterno/UsoInterno';
+
+function PrivateRoute({ children }) {
+    const { isAuthenticated } = useAuth();
+    return isAuthenticated ? children : <Navigate to="/acceso" />;
+}
+
+function App() {
+    return (
+        <Router>
+            <Header />
+            <NavBar />
+            <div className="container content">
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/productos" element={<Products />} />
+                    <Route path="/acceso" element={<Login />} />
+                    <Route path="/uso_interno" element={<UsoInterno />} />
+                    <Route path="/privada" element={
+                        <PrivateRoute>
+                            <PrivadaComponent />
+                        </PrivateRoute>
+                    } />
+                </Routes>
+            </div>
+        </Router>
+    );
+}
+
+export default App;
+
+// End of C:\Users\info\OneDrive\Escritorio\JENN\Pagina Jen\jencafe\src\App.js
+
+// Start of C:\Users\info\OneDrive\Escritorio\JENN\Pagina Jen\jencafe\src\App.css
+/* General styling for the entire app */
+body {
+  font-family: Arial, sans-serif;
+}
+
+.header {
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.content {
+  margin-top: 20px;
+}
+
+.container {
+  max-width: 1200px;
+}
+
+.home-content img {
+  max-width: 100%;
+  height: auto;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+  border-color: #004085;
+}
+
+.text-danger {
+  color: #dc3545;
+}
+
+.list-group-item {
+  border: 1px solid #dee2e6;
+}
+
+.navbar-nav .nav-link {
+  padding: 15px;
+}
+
+
+// End of C:\Users\info\OneDrive\Escritorio\JENN\Pagina Jen\jencafe\src\App.css
+
+// Start of C:\Users\info\OneDrive\Escritorio\JENN\Pagina Jen\jencafe\src\index.js
+import React from 'react';
+import { createRoot } from 'react-dom/client';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './index.css';
+import App from './App';
+
+import { AuthProvider } from './context/AuthContext';
+
+const root = createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <AuthProvider>
+      <App />
+    </AuthProvider>
+  </React.StrictMode>
+);
+
+// End of C:\Users\info\OneDrive\Escritorio\JENN\Pagina Jen\jencafe\src\index.js
+
+// Start of C:\Users\info\OneDrive\Escritorio\JENN\Pagina Jen\jencafe\src\index.css
+/* Reset de estilos */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f8f8f8;
+  color: #333333;
+}
+
+header {
+  background-color: #343a40;
+  color: #ffffff;
+  text-align: center;
+  padding: 10px;
+}
+
+nav {
+  background-color: #343a40;
+  text-align: center;
+  padding: 10px 0;
+}
+
+nav a {
+  margin: 0 15px;
+  color: #ffffff;
+  text-decoration: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+nav a:hover {
+  background-color: #495057;
+}
+
+.content {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+}
+
+.product {
+  border: 1px solid #cccccc;
+  padding: 15px;
+  margin: 10px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.product img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+
+button {
+  background-color: #007bff;
+  color: #ffffff;
+  padding: 8px 12px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+// End of C:\Users\info\OneDrive\Escritorio\JENN\Pagina Jen\jencafe\src\index.css
+
+// Start of C:\Users\info\OneDrive\Escritorio\JENN\Pagina Jen\jencafe\src\components/Clientes/Clientes.js
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './Clientes.css';
+
+function Clientes() {
+  const [clientes, setClientes] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchClientes = async () => {
+      try {
+        const response = await axios.get('http://localhost:3001/clientes');
+        setClientes(response.data);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        setError(error);
+        setLoading(false);
+      }
+    };
+
+    fetchClientes();
+  }, []);
+
+  if (loading) return <div className="d-flex justify-content-center"><div className="spinner-border" role="status"></div></div>;
+  if (error) return <p className="text-danger">Error al cargar los datos: {error.message}</p>;
+
+  return (
+    <div className="clientes-container container">
+      <h2 className="text-center">Clientes</h2>
+      <ul className="list-group">
+        {clientes.map(cliente => (
+          <li key={cliente._id} className="list-group-item">{cliente.nombre} - {cliente.direccion}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export default Clientes;
+
+// End of C:\Users\info\OneDrive\Escritorio\JENN\Pagina Jen\jencafe\src\components/Clientes/Clientes.js
+
+// Start of C:\Users\info\OneDrive\Escritorio\JENN\Pagina Jen\jencafe\src\components/Clientes/Clientes.css
+.clientes-container {
+  margin-top: 20px;
+}
+
+.list-group-item {
+  border: 1px solid #dee2e6;
+}
+
+.text-danger {
+  color: #dc3545;
+}
+
+// End of C:\Users\info\OneDrive\Escritorio\JENN\Pagina Jen\jencafe\src\components/Clientes/Clientes.css
+
+// Start of C:\Users\info\OneDrive\Escritorio\JENN\Pagina Jen\jencafe\src\components/Header/Header.js
+import React from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './Header.css';
+
+function Header() {
+  return (
+    <header className="header bg-primary text-white text-center py-3">
+      <h1>JENCAFE - Tienda Virtual de Café</h1>
+    </header>
+  );
+}
+
+export default Header;
+
+// End of C:\Users\info\OneDrive\Escritorio\JENN\Pagina Jen\jencafe\src\components/Header/Header.js
+
+// Start of C:\Users\info\OneDrive\Escritorio\JENN\Pagina Jen\jencafe\src\components/Header/Header.css
+.header {
+  background-color: #007bff;
+  color: white;
+  padding: 20px;
+}
+
+// End of C:\Users\info\OneDrive\Escritorio\JENN\Pagina Jen\jencafe\src\components/Header/Header.css
+
+// Start of C:\Users\info\OneDrive\Escritorio\JENN\Pagina Jen\jencafe\src\components/Home/Home.js
+import React from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './Home.css';
+
+function Home() {
+  return (
+    <section className="home-content container text-center">
+      <h2 className="mb-4">Bienvenido a JENCAFE</h2>
+      <p className="lead">
+        Descubre los mejores productos de café seleccionados especialmente para ti. Nuestra tienda virtual ofrece una
+        variedad de cafés de alta calidad, desde los más tradicionales hasta los más exquisitos.
+      </p>
+      <p className="lead">
+        Navega por nuestras categorías y disfruta de una experiencia única con el mejor café!
+      </p>
+      <img src="./imagenes/goodmorning-8838.gif" alt="Good Morning" className="img-fluid"/>
+    </section>
+  );
+}
+
+export default Home;
+
+// End of C:\Users\info\OneDrive\Escritorio\JENN\Pagina Jen\jencafe\src\components/Home/Home.js
+
+// Start of C:\Users\info\OneDrive\Escritorio\JENN\Pagina Jen\jencafe\src\components/Home/Home.css
+.home-content {
+  padding: 20px;
+}
+
+.home-content h2 {
+  color: #007bff;
+}
+
+.home-content p {
+  font-size: 1.2em;
+}
+
+.img-fluid {
+  max-width: 100%;
+  height: auto;
+}
+
+// End of C:\Users\info\OneDrive\Escritorio\JENN\Pagina Jen\jencafe\src\components/Home/Home.css
+
+// Start of C:\Users\info\OneDrive\Escritorio\JENN\Pagina Jen\jencafe\src\components/Login/Login.js
+import React, { useState } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { useAuth } from '../../context/AuthContext';
+import './Login.css';
+
+const Login = () => {
+  const { login } = useAuth();
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState(null);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const success = await login(username, password);
+      if (!success) {
+        setError('Credenciales incorrectas');
+      } else {
+        setError('Credenciales correctas');
+      }
+    } catch (error) {
+      setError('Error en la autenticación');
+    }
+  };
+
+  return (
+    <div className="login-container container">
+      <h2 className="text-center">Login</h2>
+      <form onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label>Username:</label>
+          <input
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            className="form-control"
+          />
+        </div>
+        <div className="form-group">
+          <label>Password:</label>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="form-control"
+          />
+        </div>
+        {error && <p className="text-danger">{error}</p>}
+        <button type="submit" className="btn btn-primary">Login</button>
+      </form>
+    </div>
+  );
+};
+
+export default Login;
+
+// End of C:\Users\info\OneDrive\Escritorio\JENN\Pagina Jen\jencafe\src\components/Login/Login.js
+
+// Start of C:\Users\info\OneDrive\Escritorio\JENN\Pagina Jen\jencafe\src\components/Login/Login.css
+.login-container {
+  margin-top: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+  border-color: #004085;
+}
+
+// End of C:\Users\info\OneDrive\Escritorio\JENN\Pagina Jen\jencafe\src\components/Login/Login.css
+
+// Start of C:\Users\info\OneDrive\Escritorio\JENN\Pagina Jen\jencafe\src\components/NavBar/NavBar.js
+import React from 'react';
+import { Link } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+function NavBar() {
+  return (
+    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+      <Link className="navbar-brand" to="/">JENCAFE</Link>
+      <div className="collapse navbar-collapse">
+        <ul className="navbar-nav mr-auto">
+          <li className="nav-item">
+            <Link className="nav-link" to="/">Inicio</Link>
+          </li>
+          <li className="nav-item">
+            <Link className="nav-link" to="/productos">Productos</Link>
+          </li>
+          <li className="nav-item">
+            <Link className="nav-link" to="/acceso">Login Usuarios</Link>
+          </li>
+          <li className="nav-item">
+            <Link className="nav-link" to="/uso_interno">Uso Interno</Link>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  );
+}
+
+export default NavBar;
+
+// End of C:\Users\info\OneDrive\Escritorio\JENN\Pagina Jen\jencafe\src\components/NavBar/NavBar.js
+
+// Start of C:\Users\info\OneDrive\Escritorio\JENN\Pagina Jen\jencafe\src\components/Products/Products.js
+import React, { useEffect, useState } from 'react';
+import './Products.css'; // Asegúrate de tener un archivo CSS para estilizar el componente
+import axios from 'axios';
+
+function Products() {
+    const [products, setProducts] = useState([]);    
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    const [formData, setFormData] = useState({
+        nombre: '',
+        descripcion: '',
+        precio: '',
+        stock: ''
+    });
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+    };
+
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                const response = await fetch('http://localhost:3001/productos', {
+                    headers: {
+                        'Authorization': 'Bearer YOUR_TOKEN_HERE' // Reemplaza 'YOUR_TOKEN_HERE' con tu token real
+                    }
+                });
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                setProducts(data); // Actualiza la lista de productos
+                setLoading(false);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                setError(error);
+                setLoading(false);
+            }
+        };
+
+        fetchProducts();
+    }, []);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();        
+        try {
+            const response = await axios.post('http://localhost:3001/productos/store', formData, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer YOUR_TOKEN_HERE' // Reemplaza 'YOUR_TOKEN_HERE' con tu token real
+                }
+            });
+            alert(response.data.message);
+        } catch (error) {
+            console.error('Error al enviar el formulario:', error);
+            alert('Error al registrar el producto: ', error);
+        }
+    }; 
+
+    if (loading) return <p>Cargando...</p>;
+    if (error) return <p>Error al cargar los datos: {error.message}</p>;
+    if (products.length === 0) return <p>No hay productos disponibles.</p>;
+
+    return (
+        <section className="content">            
+            <div>
+                <h2>Nuestros Productos</h2>                
+            </div>
+            <div className="product-grid">
+                {products.map((product) => (
+                    <div className="product" key={product._id}>
+                        <img src={product.imagen} alt={product.nombre} /> {/* Cambiado a 'nombre' */}
+                        <h3>{product.nombre}</h3> {/* Cambiado a 'nombre' */}
+                        <p>Precio: {product.precio} COP</p>
+                        <button>Agregar al Carrito</button>
+                    </div>
+                ))}
+            </div>          
+        </section>
+    );
+}
+
+export default Products;
+
+// End of C:\Users\info\OneDrive\Escritorio\JENN\Pagina Jen\jencafe\src\components/Products/Products.js
+
+// Start of C:\Users\info\OneDrive\Escritorio\JENN\Pagina Jen\jencafe\src\components/Products/Products.css
+.products-container {
+  margin-top: 20px;
+}
+
+.list-group-item {
+  border: 1px solid #dee2e6;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+  border-color: #004085;
+}
+
+// End of C:\Users\info\OneDrive\Escritorio\JENN\Pagina Jen\jencafe\src\components/Products/Products.css
+
+// Start of C:\Users\info\OneDrive\Escritorio\JENN\Pagina Jen\jencafe\src\components/UsoInterno/UsoInterno.js
+// UsoInterno.js
+import React, { useEffect, useState } from 'react';
+import './UsoInterno.css';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Modal from '@mui/material/Modal';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import axios from 'axios';
+
+const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 350,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+};
+
+function UsoInterno() {
+    const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [open, setOpen] = useState(false);
+    const [editingProduct, setEditingProduct] = useState(null);
+
+    const [formData, setFormData] = useState({
+        nombre: '',
+        descripcion: '',
+        precio: '',
+        stock: ''
+    });
+
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => {
+        setOpen(false);
+        setEditingProduct(null);
+        setFormData({ nombre: '', descripcion: '', precio: '', stock: '' });
+    };
+
+    const handleEdit = (product) => {
+        setEditingProduct(product._id);
+        setFormData({
+            nombre: product.nombre,
+            descripcion: product.descripcion,
+            precio: product.precio,
+            stock: product.stock
+        });
+        handleOpen();
+    };
+
+    const handleDelete = async (id) => {
+        try {
+            await axios.delete(`http://localhost:3001/productos/delete/${id}`);
+            setProducts(products.filter(product => product._id !== id));
+            alert('Producto eliminado con éxito');
+        } catch (error) {
+            console.error('Error al eliminar el producto:', error);
+            alert('Error al eliminar el producto');
+        }
+    };
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+    };
+
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                const response = await axios.get('http://localhost:3001/productos');
+                setProducts(response.data);
+                setLoading(false);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                setError(error);
+                setLoading(false);
+            }
+        };
+
+        fetchProducts();
+    }, []);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            if (editingProduct) {
+                await axios.put(`http://localhost:3001/productos/update/${editingProduct}`, formData);
+                setProducts(products.map(product => product._id === editingProduct ? { ...product, ...formData } : product));
+                alert('Producto actualizado con éxito');
+            } else {
+                const response = await axios.post('http://localhost:3001/productos/store', formData, {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                setProducts([...products, response.data]);
+                alert('Producto registrado con éxito');
+            }
+            handleClose();
+        } catch (error) {
+            console.error('Error al enviar el formulario:', error);
+            alert('Error al registrar el producto:', error);
+        }
+    };
+
+    if (loading) return <p>Cargando...</p>;
+    if (error) return <p>Error al cargar los datos: {error.message}</p>;
+    if (products.length === 0) return <p>No hay productos disponibles.</p>;
+
+    return (
+        <section className="content">
+            <div>
+                <h2>Interfaz Vendedor</h2>
+                <Button onClick={handleOpen}>Nuevo producto</Button>
+                <Modal
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                >
+                    <Box sx={style}>
+                        <Typography variant="h5" component="h5">
+                            {editingProduct ? 'Editar producto' : 'Registro de productos'}
+                        </Typography>
+                        <form onSubmit={handleSubmit}>
+                            <Container>
+                                <Row>
+                                    <Col>
+                                        <TextField
+                                            required
+                                            id="outlined-basic"
+                                            label="Nombre del producto"
+                                            variant="outlined"
+                                            name="nombre"
+                                            value={formData.nombre}
+                                            onChange={handleChange}
+                                        />
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col>
+                                        <TextField
+                                            id="outlined-basic"
+                                            label="Descripción del producto"
+                                            variant="outlined"
+                                            name="descripcion"
+                                            value={formData.descripcion}
+                                            onChange={handleChange}
+                                        />
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col>
+                                        <TextField
+                                            id="filled-number"
+                                            label="Precio"
+                                            type="number"
+                                            InputLabelProps={{ shrink: true }}
+                                            variant="outlined"
+                                            name="precio"
+                                            value={formData.precio}
+                                            onChange={handleChange}
+                                        />
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col>
+                                        <TextField
+                                            id="filled-number"
+                                            label="Stock"
+                                            type="number"
+                                            InputLabelProps={{ shrink: true }}
+                                            variant="outlined"
+                                            name="stock"
+                                            value={formData.stock}
+                                            onChange={handleChange}
+                                        />
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col>
+                                        <Button type="submit" variant="contained">
+                                            {editingProduct ? 'Actualizar' : 'Guardar'}
+                                        </Button>
+                                    </Col>
+                                </Row>
+                            </Container>
+                        </form>
+                    </Box>
+                </Modal>
+            </div>
+            <div>
+                <TableContainer component={Paper}>
+                    <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+                        <TableBody>
+                            {products.map((product) => (
+                                <TableRow key={product._id}>
+                                    <TableCell>{product.nombre}</TableCell>
+                                    <TableCell>
+                                        <Button onClick={() => handleEdit(product)}>Editar</Button>
+                                        <Button onClick={() => handleDelete(product._id)}>Eliminar</Button>
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+            </div>
+        </section>
+    );
+}
+
+export default UsoInterno;
+
+// End of C:\Users\info\OneDrive\Escritorio\JENN\Pagina Jen\jencafe\src\components/UsoInterno/UsoInterno.js
+
+// Start of C:\Users\info\OneDrive\Escritorio\JENN\Pagina Jen\jencafe\src\components/UsoInterno/UsoInterno.css
+/* src/components/Uso_Inertno/Uso_Interno.css */
+.button {
+    background-color: #af4c4c;
+    color: white;
+  }
+  .button:hover {
+    background-color: #a04545;
+  }
+  
+// End of C:\Users\info\OneDrive\Escritorio\JENN\Pagina Jen\jencafe\src\components/UsoInterno/UsoInterno.css
+
+// Start of C:\Users\info\OneDrive\Escritorio\JENN\Pagina Jen\jencafe\src\context/AuthContext.js
+import React, { createContext, useContext, useState } from 'react';
+
+// Crear el contexto
+const AuthContext = createContext();
+
+// Hook personalizado para usar el contexto de autenticación
+export const useAuth = () => {
+    return useContext(AuthContext);
+};
+
+// Proveedor del contexto
+export const AuthProvider = ({ children }) => {
+    const [user, setUser] = useState(null);
+
+    const login = (username, password) => {
+        // Lógica de autenticación
+        if (username === 'admin' && password === 'admin') {
+            setUser({ username });
+            return true;
+        } else {
+            return false;
+        }
+    };
+
+    const logout = () => {
+        setUser(null);
+    };
+
+    return (
+        <AuthContext.Provider value={{ user, login, logout }}>
+            {children}
+        </AuthContext.Provider>
+    );
+};
+
+// End of C:\Users\info\OneDrive\Escritorio\JENN\Pagina Jen\jencafe\src\context/AuthContext.js

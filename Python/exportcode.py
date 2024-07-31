@@ -33,6 +33,6 @@ def export_code(base_dir, output_file):
                 print(f"Path {full_path} does not exist.")
 
 # Example usage
-base_dir = r'C:\Users\info\OneDrive\Escritorio\JENN\Pagina Jen\jencafe\src'
+base_dir = r'C:\Users\jepam\Desktop\JENCAFE\jencafe\src'
 output_file = 'exported_code.txt'
 export_code(base_dir, output_file)

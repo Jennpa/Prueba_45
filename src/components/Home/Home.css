@@ -1,13 +1,16 @@
-/* src/components/Home/Home.css */
 .home-content {
   padding: 20px;
-  text-align: center;
 }
 
 .home-content h2 {
-  margin-bottom: 20px;
+  color: #007bff;
 }
 
 .home-content p {
-  margin-bottom: 10px;
+  font-size: 1.2em;
+}
+
+.img-fluid {
+  max-width: 100%;
+  height: auto;
 }

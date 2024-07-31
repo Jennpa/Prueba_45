@@ -1,7 +1,7 @@
-// src/components/Login/Login.js
 import React, { useState } from 'react';
-import { useAuth } from '../../context/AuthContext'; // Ajusta la ruta según la ubicación de AuthContext
-import './Login.css'; // Añadir archivo CSS para los estilos
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { useAuth } from '../../context/AuthContext';
+import './Login.css';
 
 const Login = () => {
   const { login } = useAuth();
@@ -13,12 +13,9 @@ const Login = () => {
     e.preventDefault();
     try {
       const success = await login(username, password);
-      console.log(success);
       if (!success) {
         setError('Credenciales incorrectas');
-
       } else {
-        //setError(null);
         setError('Credenciales correctas');
       }
     } catch (error) {
@@ -27,27 +24,29 @@ const Login = () => {
   };
 
   return (
-    <div className="login-container">
-      <h2>Login</h2>
+    <div className="login-container container">
+      <h2 className="text-center">Login</h2>
       <form onSubmit={handleSubmit}>
-        <div>
+        <div className="form-group">
           <label>Username:</label>
           <input
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            className="form-control"
           />
         </div>
-        <div>
+        <div className="form-group">
           <label>Password:</label>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            className="form-control"
           />
         </div>
-        {error && <p className="error">{error}</p>}
-        <button type="submit">Login</button>
+        {error && <p className="text-danger">{error}</p>}
+        <button type="submit" className="btn btn-primary">Login</button>
       </form>
     </div>
   );

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './Clientes.css';
 
 function Clientes() {
@@ -23,15 +24,15 @@ function Clientes() {
     fetchClientes();
   }, []);
 
-  if (loading) return <p>Cargando...</p>;
-  if (error) return <p>Error al cargar los datos: {error.message}</p>;
+  if (loading) return <div className="d-flex justify-content-center"><div className="spinner-border" role="status"></div></div>;
+  if (error) return <p className="text-danger">Error al cargar los datos: {error.message}</p>;
 
   return (
-    <div className="clientes-container">
-      <h2>Clientes</h2>
-      <ul>
+    <div className="clientes-container container">
+      <h2 className="text-center">Clientes</h2>
+      <ul className="list-group">
         {clientes.map(cliente => (
-          <li key={cliente._id}>{cliente.nombre} - {cliente.direccion}</li>
+          <li key={cliente._id} className="list-group-item">{cliente.nombre} - {cliente.direccion}</li>
         ))}
       </ul>
     </div>

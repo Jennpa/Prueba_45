@@ -1,0 +1,19 @@
+/* src/components/NavBar/NavBar.css */
+.navbar {
+    margin-bottom: 20px;
+  }
+  
+  .navbar-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .nav-link {
+    margin: 0 10px;
+  }
+  
+  .nav-link:hover {
+    background-color: #870dd8;
+    border-radius: 5px;
+  }
+  

@@ -1,12 +1,5 @@
-/* src/components/Header/Header.css */
 .header {
-  background-color: #f8f9fa;
+  background-color: #007bff;
+  color: white;
   padding: 20px;
-  text-align: center;
-  border-bottom: 1px solid #ddd;
-}
-
-.header h1 {
-  margin: 0;
-  font-size: 24px;
 }

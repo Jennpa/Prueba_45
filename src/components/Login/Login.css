@@ -1,46 +1,17 @@
-/* src/components/Login/Login.css */
 .login-container {
-  padding: 20px;
-  max-width: 400px;
-  margin: 0 auto;
+  margin-top: 20px;
 }
 
-.login-container h2 {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.login-container form {
-  display: flex;
-  flex-direction: column;
-}
-
-.login-container label {
-  margin-bottom: 5px;
-}
-
-.login-container input {
-  padding: 10px;
+.form-group {
   margin-bottom: 15px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
 }
 
-.login-container .error {
-  color: red;
-  text-align: center;
-  margin-bottom: 10px;
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
 }
 
-.login-container button {
-  background-color: #6602b8b9;
-  color: white;
-  border: none;
-  padding: 10px;
-  cursor: pointer;
-  border-radius: 5px;
-}
-
-.login-container button:hover {
-  background-color: #9b1a65;
+.btn-primary:hover {
+  background-color: #0056b3;
+  border-color: #004085;
 }

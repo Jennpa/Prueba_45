@@ -1,3 +1,4 @@
+// src/db/server.js
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
@@ -19,11 +20,11 @@ app.use(session({
   secret: 'Zoe*', // Se cambio la clave para el entorno de producción.
   resave: false,
   saveUninitialized: true,
-  store: MongoStore.create({ mongoUrl: 'mongodb://localhost:27017/Jencafe' }), // Asegúrate de tener MongoDB corriendo
+  store: MongoStore.create({ mongoUrl: 'mongodb://localhost:27017/jencafe' }), // Asegúrate de tener MongoDB corriendo
   cookie: { maxAge: 1000 * 60 * 60 * 24 } // 1 día de duración para la cookie de sesión
 }));
 
-// Middleware para proteger rutas
+// Middleware para proteger rutas (eliminado de las rutas que no requieren autenticación)
 const authMiddleware = (req, res, next) => {
   if (req.session.username) {
     next();
@@ -52,8 +53,8 @@ app.post('/logout', (req, res) => {
   });
 });
 
-// Rutas protegidas
-app.get('/clientes', authMiddleware, async (req, res) => {
+// Rutas no protegidas
+app.get('/clientes', async (req, res) => {
   try {
     const clientes = await Cliente.find();
     res.json(clientes);
@@ -62,7 +63,7 @@ app.get('/clientes', authMiddleware, async (req, res) => {
   }
 });
 
-app.get('/cafes', authMiddleware, async (req, res) => {
+app.get('/cafes', async (req, res) => {
   try {
     const cafes = await Cafe.find();
     res.json(cafes);
@@ -71,7 +72,7 @@ app.get('/cafes', authMiddleware, async (req, res) => {
   }
 });
 
-app.get('/productos', authMiddleware, async (req, res) => {
+app.get('/productos', async (req, res) => {
   try {
     const productos = await Producto.find();
     res.json(productos);
@@ -80,7 +81,9 @@ app.get('/productos', authMiddleware, async (req, res) => {
   }
 });
 
-app.post('/productos/store', authMiddleware, async (req, res) => {
+// Rutas protegidas (usando authMiddleware)
+// Rutas no protegidas
+app.post('/productos/store', async (req, res) => {
   try {
     const { nombre, descripcion, precio, stock } = req.body;
     
@@ -98,7 +101,7 @@ app.post('/productos/store', authMiddleware, async (req, res) => {
   }
 });
 
-app.delete(`/productos/delete/:id`, authMiddleware, async (req, res) => {
+app.delete(`/productos/delete/:id`, async (req, res) => {
   try {
     const { id } = req.params;
     const result = await Producto.findByIdAndDelete(id);
@@ -114,7 +117,7 @@ app.delete(`/productos/delete/:id`, authMiddleware, async (req, res) => {
   }
 });
 
-app.put(`/productos/update/:id`, authMiddleware, async (req, res) => {
+app.put(`/productos/update/:id`, async (req, res) => {
   const { id } = req.params;
   const updates = req.body;
 
@@ -122,13 +125,13 @@ app.put(`/productos/update/:id`, authMiddleware, async (req, res) => {
     const result = await Producto.findByIdAndUpdate(id, updates, { new: true });
 
     if (result) {
-      res.json(result); // Enviar el producto actualizado
+      res.send(result);
     } else {
-      res.sendStatus(404); // No encontrado
+      res.sendStatus(404); // Not Found
     }
   } catch (error) {
-    console.error('Error al actualizar el producto:', error);
-    res.status(500).send(error);
+    console.error('Error updating product:', error);
+    res.status(500).send(error); // Internal Server Error
   }
 });
 

@@ -1,5 +1,6 @@
+// UsoInterno.js
 import React, { useEffect, useState } from 'react';
-import './Uso_Interno.css';
+import './UsoInterno.css';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
@@ -28,12 +29,12 @@ const style = {
     p: 4,
 };
 
-function Uso_Interno() {
+function UsoInterno() {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [open, setOpen] = useState(false);
-    const [editingProduct, setEditingProduct] = useState(null); // Estado para manejar la edición
+    const [editingProduct, setEditingProduct] = useState(null);
 
     const [formData, setFormData] = useState({
         nombre: '',
@@ -61,13 +62,9 @@ function Uso_Interno() {
     };
 
     const handleDelete = async (id) => {
-        try {            
-            // Realiza la solicitud DELETE a la API
+        try {
             await axios.delete(`http://localhost:3001/productos/delete/${id}`);
-            
-            // Actualiza el estado local para reflejar la eliminación
-            setProducts(products.filter(product => product.id !== id));
-            
+            setProducts(products.filter(product => product._id !== id));
             alert('Producto eliminado con éxito');
         } catch (error) {
             console.error('Error al eliminar el producto:', error);
@@ -100,19 +97,9 @@ function Uso_Interno() {
         e.preventDefault();
         try {
             if (editingProduct) {
-                const response = await axios.put(`http://localhost:3001/productos/update/${editingProduct}`, formData);
-                
-                setProducts(products.map(product => product.id === editingProduct ? { ...product, ...formData } : product));
-                
-                /*
-                if (response.status === 200) {
-                    onUpdate(response.data); // Llamada para actualizar el estado o realizar otras acciones
-                    alert('Producto actualizado con éxito');
-                }
-                */
-
+                await axios.put(`http://localhost:3001/productos/update/${editingProduct}`, formData);
+                setProducts(products.map(product => product._id === editingProduct ? { ...product, ...formData } : product));
                 alert('Producto actualizado con éxito');
-                
             } else {
                 const response = await axios.post('http://localhost:3001/productos/store', formData, {
                     headers: {
@@ -219,7 +206,7 @@ function Uso_Interno() {
                 <TableContainer component={Paper}>
                     <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
                         <TableBody>
-                            {products.map((product) => (                                
+                            {products.map((product) => (
                                 <TableRow key={product._id}>
                                     <TableCell>{product.nombre}</TableCell>
                                     <TableCell>
@@ -236,4 +223,4 @@ function Uso_Interno() {
     );
 }
 
-export default Uso_Interno;
+export default UsoInterno;

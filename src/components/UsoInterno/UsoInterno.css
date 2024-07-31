@@ -1,0 +1,8 @@
+/* src/components/Uso_Inertno/Uso_Interno.css */
+.button {
+  background-color: #af4c4c;
+  color: white;
+}
+.button:hover {
+  background-color: #a04545;
+}
