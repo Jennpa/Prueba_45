@@ -6,12 +6,7 @@
   margin-bottom: 15px;
 }
 
-.btn-primary {
-  background-color: #007bff;
-  border-color: #007bff;
-}
-
-.btn-primary:hover {
-  background-color: #0056b3;
-  border-color: #004085;
+.table thead th {
+  background-color: #cce5ff; /* Azul claro */
+  color: #004085;            /* Texto de color azul oscuro */
 }

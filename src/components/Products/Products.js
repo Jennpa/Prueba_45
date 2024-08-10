@@ -74,7 +74,7 @@ function Products() {
                         <img src={product.imagen} alt={product.nombre} /> {/* Cambiado a 'nombre' */}
                         <h3>{product.nombre}</h3> {/* Cambiado a 'nombre' */}
                         <p>Precio: {product.precio} COP</p>
-                        <button>Agregar al Carrito</button>
+                        <button>Agregar </button>
                     </div>
                 ))}
             </div>          
